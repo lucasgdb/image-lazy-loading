@@ -1,14 +1,14 @@
 import { useEffect, useRef } from "react";
-import { getObserver } from "../utils/get-observer";
+import { getIntersectionObserver } from "../utils/get-intersection-observer";
 import { Skeleton } from "./Skeleton";
-import { HTMLDivElementExtended } from "../types";
+import { ObservableSkeletonElement } from "../types";
 
 type Props = {
   width: number | string;
   height: number | string;
   threshold?: number;
   rootMargin?: string;
-  onIntersected: () => void;
+  onIntersection: () => void;
 };
 
 export function SkeletonWithObserver({
@@ -16,20 +16,20 @@ export function SkeletonWithObserver({
   height,
   threshold,
   rootMargin,
-  onIntersected,
+  onIntersection,
 }: Props) {
-  const loaderRef = useRef<HTMLDivElementExtended>(null);
+  const loaderRef = useRef<ObservableSkeletonElement>(null);
 
   // IntersectionObserver - observes skeleton and when it is intersected, it loads the image src
   useEffect(() => {
-    const intersectionObserver = getObserver({
+    const intersectionObserver = getIntersectionObserver({
       threshold,
       rootMargin,
     });
 
     if (loaderRef.current) {
-      loaderRef.current.onIntersected = () => {
-        onIntersected();
+      loaderRef.current.onIntersection = () => {
+        onIntersection();
 
         if (loaderRef.current)
           intersectionObserver.unobserve(loaderRef.current);

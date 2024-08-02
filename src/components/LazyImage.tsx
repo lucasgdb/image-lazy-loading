@@ -17,9 +17,9 @@ export const LazyImage = memo(
 
     const handleLoad = () => setLoadingImage(false);
 
-    const handleIntersected = () => setShouldRenderImage(true);
+    const handleIntersection = () => setShouldRenderImage(true);
 
-    const handleMutate = () => {
+    const handleMutation = () => {
       setLoadingImage(true);
       setShouldRenderImage(false);
     };
@@ -34,7 +34,7 @@ export const LazyImage = memo(
             height={props.height}
             threshold={threshold}
             rootMargin={rootMargin}
-            onIntersected={handleIntersected}
+            onIntersection={handleIntersection}
           />
         )}
 
@@ -42,7 +42,7 @@ export const LazyImage = memo(
           isObservable={!loadingImage}
           onLoad={handleLoad}
           src={source}
-          onMutate={handleMutate}
+          onMutation={handleMutation}
           {...props}
         />
       </>

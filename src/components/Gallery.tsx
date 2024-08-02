@@ -22,7 +22,12 @@ export function Gallery() {
 
   return (
     <GalleryContainer>
-      <LazyImage width={imageSize} height={imageSize} src={image} />
+      <LazyImage
+        width={imageSize}
+        height={imageSize}
+        src={image}
+        threshold={0}
+      />
 
       {arrayOfImages.map((src, index) => (
         <LazyImage width={imageSize} height={imageSize} src={src} key={index} />
