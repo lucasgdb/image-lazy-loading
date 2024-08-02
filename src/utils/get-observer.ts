@@ -4,7 +4,7 @@ const checkIntersections = (entries: IntersectionObserverEntry[]) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
       const target = entry.target as HTMLDivElementExtended;
-      target.onShowImage?.();
+      target.onIntersected?.();
     }
   });
 };

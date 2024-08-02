@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ImageWithLoader } from "./ImageWithLoader";
+import { LazyImage } from "./LazyImage";
 import { useEffect, useState } from "react";
 
 const generateCounter = 100;
@@ -22,21 +22,10 @@ export function Gallery() {
 
   return (
     <GalleryContainer>
-      <ImageWithLoader
-        width={imageSize}
-        height={imageSize}
-        threshold={0.5}
-        src={image}
-      />
+      <LazyImage width={imageSize} height={imageSize} src={image} />
 
-      {arrayOfImages.map((image, index) => (
-        <ImageWithLoader
-          width={imageSize}
-          height={imageSize}
-          threshold={0.5}
-          src={image}
-          key={index}
-        />
+      {arrayOfImages.map((src, index) => (
+        <LazyImage width={imageSize} height={imageSize} src={src} key={index} />
       ))}
     </GalleryContainer>
   );
