@@ -27,5 +27,6 @@ export function Gallery() {
 const GalleryContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 16px;
 `;
