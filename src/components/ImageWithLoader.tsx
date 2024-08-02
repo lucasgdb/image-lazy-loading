@@ -5,6 +5,7 @@ import { getObserver } from "../utils/get-observer";
 import { Image } from "./Image";
 
 type Props = React.ImgHTMLAttributes<HTMLImageElement> & {
+  src: string;
   width: number | string;
   height: number | string;
   threshold?: number;
@@ -68,14 +69,6 @@ export function ImageWithLoader({
       if (current) mutationObserver.disconnect();
     };
   }, [imgRef]);
-
-  if (!props.src) {
-    return (
-      <span style={{ width: props.width, height: props.height }}>
-        <Skeleton width={props.width} height={props.height} />
-      </span>
-    );
-  }
 
   const handleLoad = () => setHidden(false);
 
