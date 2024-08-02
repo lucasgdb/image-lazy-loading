@@ -15,14 +15,16 @@ type Props = React.ImgHTMLAttributes<HTMLImageElement> & {
 export function ImageWithLoader({
   threshold = 0.5,
   rootMargin,
+  src,
   ...props
 }: Props) {
-  const [hidden, setHidden] = useState(true);
-  const [shouldShowImage, setShouldShowImage] = useState(false);
+  const [loadingImage, setLoadingImage] = useState(true);
+  const [shouldRenderImage, setShouldRenderImage] = useState(false);
 
   const imgRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElementExtended>(null);
 
+  // IntersectionObserver - observes skeleton and when it is intersected, it loads the image src
   useEffect(() => {
     const intersectionObserver = getObserver({
       threshold,
@@ -31,7 +33,7 @@ export function ImageWithLoader({
 
     if (containerRef.current) {
       containerRef.current.onShowImage = () => {
-        setShouldShowImage(true);
+        setShouldRenderImage(true);
         if (containerRef.current)
           intersectionObserver.unobserve(containerRef.current);
       };
@@ -44,19 +46,27 @@ export function ImageWithLoader({
     return () => {
       if (current) intersectionObserver.unobserve(current);
     };
-  }, [containerRef]);
+  }, [shouldRenderImage]);
 
+  // MutatioObserver - observes image's src and when it changes, the skeleton will be back
   useEffect(() => {
     const MutationObserver =
       window.MutationObserver ||
       window.WebKitMutationObserver ||
       window.MozMutationObserver;
 
-    const handleChangeAvatar = () => setHidden(true);
+    const handleChangeAvatar = (entries: MutationRecord[]) => {
+      entries.forEach((entry) => {
+        if (entry.type === "attributes") {
+          setLoadingImage(true);
+          setShouldRenderImage(false);
+        }
+      });
+    };
 
     const mutationObserver = new MutationObserver(handleChangeAvatar);
 
-    if (imgRef.current) {
+    if (imgRef.current && !loadingImage) {
       mutationObserver.observe(imgRef.current, {
         attributes: true,
         attributeFilter: ["src"],
@@ -68,13 +78,15 @@ export function ImageWithLoader({
     return () => {
       if (current) mutationObserver.disconnect();
     };
-  }, [imgRef]);
+  }, [loadingImage]);
 
-  const handleLoad = () => setHidden(false);
+  const handleLoad = () => setLoadingImage(false);
+
+  const source = shouldRenderImage ? src : undefined;
 
   return (
     <>
-      {hidden && (
+      {loadingImage && (
         <Skeleton
           width={props.width}
           height={props.height}
@@ -82,9 +94,13 @@ export function ImageWithLoader({
         />
       )}
 
-      {shouldShowImage && (
-        <Image onLoad={handleLoad} ref={imgRef} hidden={hidden} {...props} />
-      )}
+      <Image
+        onLoad={handleLoad}
+        ref={imgRef}
+        hidden={loadingImage}
+        src={source}
+        {...props}
+      />
     </>
   );
 }

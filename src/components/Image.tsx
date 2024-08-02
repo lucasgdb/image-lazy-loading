@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const Image = forwardRef<
   HTMLImageElement,
-  React.HTMLAttributes<HTMLImageElement>
+  React.ImgHTMLAttributes<HTMLImageElement>
 >(function (props, ref) {
   return <ImageContainer {...props} ref={ref} />;
 });
