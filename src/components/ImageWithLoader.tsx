@@ -71,23 +71,27 @@ export function ImageWithLoader({
 
   if (!props.src) {
     return (
-      <div style={{ width: props.width, height: props.height }}>
+      <span style={{ width: props.width, height: props.height }}>
         <Skeleton width={props.width} height={props.height} />
-      </div>
+      </span>
     );
   }
 
   const handleLoad = () => setHidden(false);
 
   return (
-    <div
-      style={{ width: props.width, height: props.height }}
-      ref={containerRef}
-    >
-      {hidden && <Skeleton width={props.width} height={props.height} />}
-      {shouldShowImage && (
-        <Image onLoad={handleLoad} hidden={hidden} ref={imgRef} {...props} />
+    <>
+      {hidden && (
+        <Skeleton
+          width={props.width}
+          height={props.height}
+          ref={containerRef}
+        />
       )}
-    </div>
+
+      {shouldShowImage && (
+        <Image onLoad={handleLoad} ref={imgRef} hidden={hidden} {...props} />
+      )}
+    </>
   );
 }

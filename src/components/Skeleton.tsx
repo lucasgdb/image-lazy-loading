@@ -5,8 +5,9 @@ type Props = {
   height: number | string;
 };
 
-export const Skeleton = styled.div<Props>`
+export const Skeleton = styled.span<Props>`
   ${({ width, height }) => css`
+    display: inline-block;
     background-color: #dce0e8;
 
     border-radius: 50%;
