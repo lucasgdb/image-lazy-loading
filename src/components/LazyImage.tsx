@@ -1,6 +1,6 @@
 import { memo, useState } from "react";
-import { SkeletonWithObserver } from "./SkeletonWithObserver";
-import { ImageWithObserver } from "./ImageWithObserver";
+import { ObservableSkeleton } from "./ObservableSkeleton";
+import { ObservableImage } from "./ObservableImage";
 
 type Props = React.ImgHTMLAttributes<HTMLImageElement> & {
   src: string;
@@ -29,7 +29,7 @@ export const LazyImage = memo(
     return (
       <>
         {loadingImage && (
-          <SkeletonWithObserver
+          <ObservableSkeleton
             width={props.width}
             height={props.height}
             threshold={threshold}
@@ -38,7 +38,7 @@ export const LazyImage = memo(
           />
         )}
 
-        <ImageWithObserver
+        <ObservableImage
           isObservable={!loadingImage}
           onLoad={handleLoad}
           src={source}

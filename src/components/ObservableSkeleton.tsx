@@ -11,7 +11,7 @@ type Props = {
   onIntersection: () => void;
 };
 
-export function SkeletonWithObserver({
+export function ObservableSkeleton({
   width,
   height,
   threshold,

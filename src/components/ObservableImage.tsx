@@ -8,12 +8,7 @@ type Props = React.ImgHTMLAttributes<ObservableImageElement> & {
   onMutation: () => void;
 };
 
-export function ImageWithObserver({
-  isObservable,
-  onMutation,
-
-  ...props
-}: Props) {
+export function ObservableImage({ isObservable, onMutation, ...props }: Props) {
   const imgRef = useRef<ObservableImageElement>(null);
 
   // MutatioObserver - observes image's src and when it changes, the skeleton will be back
