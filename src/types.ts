@@ -1,7 +1,7 @@
-export interface ObservableSkeletonElement extends HTMLSpanElement {
-  onIntersection?: () => void;
-}
+export type ObservableSkeletonElement = HTMLSpanElement & {
+  onIntersection: () => void;
+};
 
-export interface ObservableImageElement extends HTMLImageElement {
-  onMutation?: () => void;
-}
+export type ObservableImageElement = HTMLImageElement & {
+  onMutation: () => void;
+};

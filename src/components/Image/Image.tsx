@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, memo, useCallback, useState } from "react";
 import { ObservableSkeleton } from "./ObservableSkeleton";
 import { ObservableImage } from "./ObservableImage";
 
-type Props = React.ImgHTMLAttributes<HTMLImageElement> & {
+type Props = React.ComponentPropsWithoutRef<"img"> & {
   src: string;
   width: number | string;
   height: number | string;

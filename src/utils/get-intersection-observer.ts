@@ -4,7 +4,7 @@ const handleIntersection = (entries: IntersectionObserverEntry[]) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
       const target = entry.target as ObservableSkeletonElement;
-      target.onIntersection?.();
+      target.onIntersection();
     }
   });
 };

@@ -3,7 +3,7 @@ import { ObservableImageElement } from "../../types";
 import { getMutationObserver } from "../../utils/get-mutation-observer";
 import { cx } from "../../utils/cx";
 
-type Props = React.ImgHTMLAttributes<ObservableImageElement> & {
+type Props = React.ComponentPropsWithoutRef<"img"> & {
   isObservable: boolean;
   onMutation: () => void;
 };

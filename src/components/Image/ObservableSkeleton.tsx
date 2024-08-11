@@ -34,9 +34,7 @@ export function ObservableSkeleton({
       current.onIntersection = () => {
         onIntersection();
 
-        if (current) {
-          intersectionObserver.unobserve(current);
-        }
+        intersectionObserver.unobserve(current);
       };
 
       intersectionObserver.observe(current);

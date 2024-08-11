@@ -4,7 +4,7 @@ const handleAttributeMutate = (entries: MutationRecord[]) => {
   entries.forEach((entry) => {
     if (entry.type === "attributes") {
       const target = entry.target as ObservableImageElement;
-      target.onMutation?.();
+      target.onMutation();
     }
   });
 };
