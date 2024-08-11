@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, memo, useState } from "react";
+import { ComponentPropsWithoutRef, memo, useCallback, useState } from "react";
 import { ObservableSkeleton } from "./ObservableSkeleton";
 import { ObservableImage } from "./ObservableImage";
 
@@ -18,12 +18,14 @@ export const Image = memo(
 
     const handleImageLoaded = () => setIsImageLoading(false);
 
-    const handleImageIntersected = () => setShouldRenderImage(true);
+    const handleImageIntersected = useCallback(() => {
+      setShouldRenderImage(true);
+    }, []);
 
-    const handleImageChange = () => {
+    const handleImageChange = useCallback(() => {
       setIsImageLoading(true);
       setShouldRenderImage(false);
-    };
+    }, []);
 
     const source = shouldRenderImage ? src : undefined;
 

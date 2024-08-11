@@ -47,7 +47,7 @@ export function ObservableSkeleton({
         intersectionObserver.unobserve(current);
       }
     };
-  }, []);
+  }, [rootMargin, threshold, onIntersection]);
 
   const getSize = (size: string | number) => {
     return typeof size === "string" ? size : `${size}px`;
