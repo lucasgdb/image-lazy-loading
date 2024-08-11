@@ -1,10 +1,5 @@
 import type { ObservableImageElement } from "../types";
 
-const MutationObserver =
-  window.MutationObserver ||
-  window.WebKitMutationObserver ||
-  window.MozMutationObserver;
-
 const handleAttributeMutate = (entries: MutationRecord[]) => {
   entries.forEach((entry) => {
     if (entry.type === "attributes") {
