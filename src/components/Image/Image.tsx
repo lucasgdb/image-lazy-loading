@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { ComponentPropsWithRef, memo, useState } from "react";
 import { ObservableSkeleton } from "./ObservableSkeleton";
 import { ObservableImage } from "./ObservableImage";
 
@@ -8,41 +8,45 @@ type Props = React.ImgHTMLAttributes<HTMLImageElement> & {
   height: number | string;
   threshold?: number;
   rootMargin?: string;
+  skeletonProps?: ComponentPropsWithRef<"span">;
 };
 
-export const LazyImage = memo(
-  ({ threshold = 0.5, rootMargin, src, ...props }: Props) => {
-    const [loadingImage, setLoadingImage] = useState(true);
+export const Image = memo(
+  ({ threshold = 0.5, rootMargin, src, skeletonProps, ...props }: Props) => {
+    const [isImageLoading, setIsImageLoading] = useState(true);
     const [shouldRenderImage, setShouldRenderImage] = useState(false);
 
-    const handleLoad = () => setLoadingImage(false);
+    const handleImageLoaded = () => setIsImageLoading(false);
 
-    const handleIntersection = () => setShouldRenderImage(true);
+    const handleImageIntersected = () => setShouldRenderImage(true);
 
-    const handleMutation = () => {
-      setLoadingImage(true);
+    const handleImageChange = () => {
+      setIsImageLoading(true);
       setShouldRenderImage(false);
     };
 
     const source = shouldRenderImage ? src : undefined;
 
+    const isImageLoaded = !isImageLoading;
+
     return (
       <>
-        {loadingImage && (
+        {isImageLoading && (
           <ObservableSkeleton
             width={props.width}
             height={props.height}
             threshold={threshold}
             rootMargin={rootMargin}
-            onIntersection={handleIntersection}
+            onIntersection={handleImageIntersected}
+            {...skeletonProps}
           />
         )}
 
         <ObservableImage
-          isObservable={!loadingImage}
-          onLoad={handleLoad}
           src={source}
-          onMutation={handleMutation}
+          isObservable={isImageLoaded}
+          onLoad={handleImageLoaded}
+          onMutation={handleImageChange}
           {...props}
         />
       </>
