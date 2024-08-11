@@ -1,4 +1,4 @@
-import { ComponentPropsWithRef, memo, useState } from "react";
+import { ComponentPropsWithoutRef, memo, useState } from "react";
 import { ObservableSkeleton } from "./ObservableSkeleton";
 import { ObservableImage } from "./ObservableImage";
 
@@ -8,7 +8,7 @@ type Props = React.ImgHTMLAttributes<HTMLImageElement> & {
   height: number | string;
   threshold?: number;
   rootMargin?: string;
-  skeletonProps?: ComponentPropsWithRef<"span">;
+  skeletonProps?: ComponentPropsWithoutRef<"span">;
 };
 
 export const Image = memo(
